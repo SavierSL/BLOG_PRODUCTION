@@ -29,6 +29,7 @@ export const logInUser: RequestHandler = async (req: Req, res: Res) => {
       if (e) {
         throw e;
       } else {
+        res.cookie("token", token);
         res.json({ token: token });
       }
     });

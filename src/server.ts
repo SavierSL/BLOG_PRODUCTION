@@ -1,6 +1,7 @@
 import http from "http";
 import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import logging from "../src/config/logging";
 import config from "../src/config/config";
 import sample from "./routes/sample";
@@ -40,6 +41,7 @@ app.use((req: Req, res: Res, next) => {
 //Parse the request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //Rules of our API
 app.use((req: Req, res: Res, next: Nxt) => {
