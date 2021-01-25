@@ -1,0 +1,9 @@
+.primary-button {
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: darken($color: #fff, $amount: 10%);
+  }
+}
