@@ -12,10 +12,9 @@ router.post(
   [
     check("name", "Text is required").not().isEmpty(),
     check("email", "Email is required").isEmail(),
-    check("password", "Password is required and must be 6 chars")
-      .not()
-      .isEmpty()
-      .isLength({ min: 6 }),
+    check("password", "Password is required and must be 6 chars").isLength({
+      min: 6,
+    }),
   ],
   registerUserCTRL
 );

@@ -11,13 +11,11 @@ export const logInUser: RequestHandler = async (req: Req, res: Res) => {
   try {
     const user: IUser | null = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(400).json({ msg: "Invalid Email" });
+      return res.status(400).json({ msg: [{ msg: "Invalid Email" }] });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res
-        .status(400)
-        .json({ msg: "Invalid Credentials / Password is wrong" });
+      return res.status(400).json({ msg: [{ msg: "Pass is wrong" }] });
     }
     //return jwt token
     const payload = {

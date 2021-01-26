@@ -20,7 +20,7 @@ export const registerUserCTRL: RequestHandler = async (req: Req, res: Res) => {
   try {
     let user: IUser | null = await User.findOne({ email: email });
     if (user) {
-      return res.status(400).json({ msg: "Email already exist" });
+      return res.status(400).json({ msg: [{ msg: "Email already exist" }] });
     }
     //Get users gravatar
     const avatar = gravatar.url(email, {

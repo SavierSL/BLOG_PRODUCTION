@@ -74,6 +74,16 @@ function* registerDataSaga(action: any) {
 function* watchrRgisterDataSaga() {
   yield takeEvery(type.REGISTER_SAGA, registerDataSaga);
 }
+function* removeAlertSaga() {
+  yield put({ type: type.ALERT_SAGA_REMOVE });
+}
+function* watchRemoveAlertSaga() {
+  yield takeEvery(type.ALERT_SAGA, removeAlertSaga);
+}
 export default function* rootSaga() {
-  yield all([watchLogInSaga(), watchrRgisterDataSaga()]);
+  yield all([
+    watchLogInSaga(),
+    watchrRgisterDataSaga(),
+    watchRemoveAlertSaga(),
+  ]);
 }

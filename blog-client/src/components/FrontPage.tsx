@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logInAction } from "../redux/actions/logIn";
 import { NavLink, Redirect } from "react-router-dom";
 import Alert from "./alert/Alert";
+import { removeAlertAction } from "../redux/actions/alert";
 
 export interface FrontPageProps {}
 interface logInState {
@@ -21,7 +22,7 @@ const FrontPage: React.FC<FrontPageProps> = () => {
   const dispatch = useDispatch();
   const handleInput = (e: any) => {
     e.preventDefault();
-
+    dispatch(removeAlertAction());
     setLogInInput({ ...logInInput, [e.target.name]: e.target.value });
   };
   const { email, password } = logInInput;

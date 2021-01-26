@@ -2,14 +2,14 @@ import * as types from "../actions/types";
 export interface InitialState {
   token: null | string;
   loading: boolean;
-  msg: string;
+  msg: {};
   isAuth: boolean;
 }
 
 export const initialState: InitialState = {
   token: localStorage.getItem("token"),
   loading: false,
-  msg: "",
+  msg: { msg: [{ msg: "" }] },
   isAuth: false,
 };
 
@@ -45,6 +45,12 @@ const post = (state = initialState, action: Action): InitialState => {
       return {
         ...state,
         msg: payload,
+      };
+    }
+    case types.ALERT_SAGA_REMOVE: {
+      return {
+        ...state,
+        msg: { msg: [{ msg: "" }] },
       };
     }
     default: {

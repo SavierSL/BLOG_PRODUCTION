@@ -1,0 +1,30 @@
+.registerPageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+}
+.registerPage {
+  text-align: center;
+  height: 75vh;
+  width: 40rem;
+  background: rgb(255, 193, 60);
+  margin-top: 5rem;
+  border-radius: 1rem 0 0 1rem;
+
+  &_content {
+    padding: 4rem;
+  }
+  &_form {
+    margin-top: 4rem;
+  }
+}
+.registerPage2 {
+  height: 80vh;
+  width: 40rem;
+  background: rgb(201, 252, 238);
+  margin-top: 5rem;
+  border-radius: 0 2rem 2rem 0;
+}

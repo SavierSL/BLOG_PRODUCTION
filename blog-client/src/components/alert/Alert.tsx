@@ -1,14 +1,20 @@
 export interface AlertProps {
-  error: { msg: string };
+  error: { msg: { msg: string }[] };
 }
 
 const Alert: React.FC<AlertProps> = ({ error }) => {
-  console.log(error.msg);
+  console.log(error);
   return (
     <>
-      <div className="alertContainer">
-        <h1>{error.msg}</h1>
-      </div>
+      {error.msg[0].msg === ""
+        ? ""
+        : error.msg.map((error): any => {
+            return (
+              <div className="alertContainer">
+                <span className="alertContainer_red-alert">{error.msg}</span>
+              </div>
+            );
+          })}
     </>
   );
 };
