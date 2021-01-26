@@ -45,8 +45,13 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
       <div className="frontPage">
         <h1 className="primary-heading">BLOG IT</h1>
         <h1 className="primary-heading">SIGN UP</h1>
-        <form action="" onSubmit={(e) => handleRegister(e)}>
+        <form
+          className="primary-form"
+          action=""
+          onSubmit={(e) => handleRegister(e)}
+        >
           <input
+            className="primary-form_primary-input"
             placeholder="name"
             name="name"
             type="text"
@@ -54,6 +59,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
             onChange={(e) => handleRegInput(e)}
           />
           <input
+            className="primary-form_primary-input"
             placeholder="email"
             name="email"
             type="text"
@@ -61,6 +67,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
             onChange={(e) => handleRegInput(e)}
           />
           <input
+            className="primary-form_primary-input"
             placeholder="password"
             name="password"
             type="password"
@@ -68,13 +75,14 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
             onChange={(e) => handleRegInput(e)}
           />
           <input
+            className="primary-form_primary-input"
             placeholder="confirm password"
             name="confirmPassword"
             type="password"
             value={regInput.confirmPassword}
             onChange={(e) => handleRegInput(e)}
           />
-          <button>REGISTER</button>
+          <button className="primary-form_primary-button">REGISTER</button>
           <h2>
             <NavLink to="/">Sign In</NavLink>
           </h2>
