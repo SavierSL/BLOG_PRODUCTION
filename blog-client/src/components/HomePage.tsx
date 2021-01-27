@@ -12,7 +12,7 @@ export interface HomePageProps {}
 interface BlogPost {
   title: string;
   blogContent: string;
-  img: undefined | null | File;
+  img: unknown | null | string;
 }
 registerPlugin(
   FilePondPluginImageExifOrientation,
@@ -34,9 +34,7 @@ const HomePage: React.FC<HomePageProps> = () => {
     setFiles(file.map((files: any) => files.file));
   };
   console.log(file);
-  useEffect(() => {
-    console.log(file);
-  }, [file]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     dispatch(blogPostAction(title, blogContent, img, token));
@@ -54,17 +52,21 @@ const HomePage: React.FC<HomePageProps> = () => {
       }
       return reader;
     });
-
+  let updatedImage: string | unknown;
   const newImage = toBase64(file);
   const dataImage = async () => {
     const newData = await newImage;
-    console.log(newData);
+    updatedImage = newData;
     return newData;
   };
   dataImage();
   const handleInput = (e: any) => {
     e.preventDefault();
-    setBlogPost({ ...blogPost, [e.target.name]: e.target.value, img: file[0] });
+    setBlogPost({
+      ...blogPost,
+      [e.target.name]: e.target.value,
+      img: updatedImage,
+    });
   };
   return (
     <>

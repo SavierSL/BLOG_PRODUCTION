@@ -33,6 +33,7 @@ export const BlogPost: Model<IBlogPost> = model(
       trim: true,
     },
     img: {
+      type: Buffer,
       default: "",
     },
     imgType: {

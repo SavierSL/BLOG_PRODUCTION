@@ -8,7 +8,7 @@ interface blogPostActionType {
 export const blogPostAction = (
   title: string,
   blogContent: string,
-  img: undefined | null | File,
+  img: unknown | null | File,
   token: string
 ): blogPostActionType => {
   return {
