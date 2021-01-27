@@ -43,12 +43,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-//Rules of our API
+// Rules of our API
 app.use((req: Req, res: Res, next: Nxt) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth-token"
   );
   if (req.method == "OPTIONS") {
     res.header("Accesst-Control-Allow-Methos", "GET POST PATCH DELETE PUT");

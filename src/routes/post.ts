@@ -8,7 +8,6 @@ import {
   BlogPostCommentCTRL,
   BlogPostDeleteCommentCTRL,
   BlogPostEditPostCTRL,
-  upload,
 } from "../controllers/postCtrl";
 const router = express.Router();
 
@@ -16,7 +15,6 @@ const router = express.Router();
 //@post a blogpost
 //@api /post/blog-post
 router.post("/blog-post", [
-  upload.single("image"),
   auth,
 
   check("title", "Title is required").not().isEmpty(),

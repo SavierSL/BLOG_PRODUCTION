@@ -3,24 +3,43 @@ import { BlogPost, IBlogPost } from "../models/BlogPost";
 import { User, IUser } from "../models/User";
 import { validationResult } from "express-validator";
 import { Req, Res, Nxt } from "../TS/types";
-import { ObjectID } from "mongodb";
+import { ObjectID, Binary } from "mongodb";
+import * as fs from "fs";
 import multer from "multer";
+const imageMimeTypes = ["image/jpeg", "image/png", "images/gif"];
+interface postType {
+  user: ObjectID;
+  name: string;
+  title: string;
+  img: Buffer;
+  imgType: string;
+}
+// const storage = multer.diskStorage({
+//   destination: (req, file, callback) => {
+//     callback(null, "src/public/uploads/images");
+//   },
+//   filename: (req, file, callback) => {
+//     callback(null, Date.now() + file.originalname);
+//   },
+// });
 
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, "src/public/uploads/images");
-  },
-  filename: (req, file, callback) => {
-    callback(null, Date.now() + file.originalname);
-  },
-});
+// export const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fieldSize: 1024 * 1024 * 3,
+//   },
+// });
+// function saveCover(post: postType, imgEncoded: any) {
+//   console.log("filepond");
 
-export const upload = multer({
-  storage: storage,
-  limits: {
-    fieldSize: 1024 * 1024 * 3,
-  },
-});
+//   console.log(`${JSON.stringify(imgEncoded)} image`);
+//   if (imgEncoded === null) return;
+//   const img = JSON.parse(imgEncoded);
+//   if (img != null && imageMimeTypes.includes(img.type)) {
+//     post.img = Buffer.from(img.data, "base64");
+//     post.imgType = img.type;
+//   }
+// }
 
 //POST A BLOGPOST
 export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
@@ -31,23 +50,27 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
   const title = (req.body as { title: string }).title;
   const blogContent = (req.body as { blogContent: string }).blogContent;
   const userID = ((req as any).user as { id: string }).id;
-  const img = ((req as any).file as { filename: string }).filename;
-  
+  const img = (req.body as { img: Buffer }).img;
+
   console.log(req.file);
   try {
     const user: IUser | null = await User.findById(userID).select("-password");
     console.log(userID);
 
     if (!user) {
-      return res.status(400).json({ msg: "Can't find user" });
+      return res.status(400).json({ msg: [{ msg: "Cannot find user" }] });
     }
+
     const post = {
       user: user,
       name: user.name,
       title: title,
       blogContent: blogContent,
       img: img,
+      ...req.body,
     };
+    // saveCover(post, img);
+
     const newPost: IBlogPost = new BlogPost(post);
     newPost.save();
     res.json(newPost);
@@ -155,7 +178,7 @@ export const BlogPostCommentCTRL: RequestHandler = async (
       "-password"
     );
     if (!post) {
-      return res.status(400).json({ msg: "Can't find post" });
+      return res.status(400).json({ msg: [{ msg: "Can't find post" }] });
     }
     const newComment = {
       id: new ObjectID(),

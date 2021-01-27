@@ -53,6 +53,12 @@ const post = (state = initialState, action: Action): InitialState => {
         msg: { msg: [{ msg: "" }] },
       };
     }
+    case types.BLOGPOST_FAILED: {
+      return {
+        ...state,
+        msg: payload,
+      };
+    }
     default: {
       return state;
     }

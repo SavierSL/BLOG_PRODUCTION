@@ -74,6 +74,48 @@ function* registerDataSaga(action: any) {
 function* watchrRgisterDataSaga() {
   yield takeEvery(type.REGISTER_SAGA, registerDataSaga);
 }
+
+//BLOG POST
+const blogPostData = async (
+  title: string,
+  blogContent: string,
+  img: File,
+  token: string
+) => {
+  console.log(img);
+  const body = { title, blogContent, img };
+  const content = {
+    method: "POST",
+    headers: { "x-auth-token": token, "Content-type": "application/json" },
+    body: JSON.stringify(body),
+  };
+  const data = await fetch(`${port}/post/blog-post`, content)
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+  console.log(data);
+  return data;
+};
+function* blogPostSaga(action: any) {
+  const { title, blogContent, img, token } = action.payload;
+  try {
+    const res = yield blogPostData(title, blogContent, img, token);
+    if (res.hasOwnProperty("msg")) {
+      return yield put({ type: type.BLOGPOST_FAILED, payload: res });
+    }
+    return yield put({ type: type.BLOGPOST_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.BLOGPOST_FAILED, payload: error });
+  }
+}
+function* watchBlogPostSaga() {
+  yield takeEvery(type.BLOGPOST_SAGA, blogPostSaga);
+}
+
 function* removeAlertSaga() {
   yield put({ type: type.ALERT_SAGA_REMOVE });
 }
@@ -85,5 +127,6 @@ export default function* rootSaga() {
     watchLogInSaga(),
     watchrRgisterDataSaga(),
     watchRemoveAlertSaga(),
+    watchBlogPostSaga(),
   ]);
 }

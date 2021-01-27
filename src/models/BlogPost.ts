@@ -11,34 +11,39 @@ export interface IBlogPost extends Document {
   date: string;
   img: string;
 }
-const BlogPostSchema: Schema = new mongoose.Schema({
-  user: {
-    type: ObjectID,
-    ref: "user",
-  },
-  name: {
-    type: String,
-  },
-  title: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  blogContent: {
-    type: String,
-    required: true,
-    trimg: true,
-  },
-  img: {
-    type: String,
-    default: "",
-  },
-  comments: { type: Array, default: [] },
-  likes: { type: Array, default: [] },
-  date: {
-    type: Date,
-    default: new Date().toISOString(),
-  },
-});
 
-export const BlogPost: Model<IBlogPost> = model("blogpost", BlogPostSchema);
+export const BlogPost: Model<IBlogPost> = model(
+  "blogpost",
+  new mongoose.Schema({
+    user: {
+      type: ObjectID,
+      ref: "user",
+    },
+    name: {
+      type: String,
+    },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    blogContent: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    img: {
+      default: "",
+    },
+    imgType: {
+      type: String,
+      default: "",
+    },
+    comments: { type: Array, default: [] },
+    likes: { type: Array, default: [] },
+    date: {
+      type: Date,
+      default: new Date().toISOString(),
+    },
+  })
+);

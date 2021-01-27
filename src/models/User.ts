@@ -12,32 +12,35 @@ export interface IUser extends Document {
 //   firstName: { type: String, required: true },
 //   lastName: { type: String, required: true },
 // });
-const UserSchema: Schema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  avatar: {
-    // the profile avatar
-    type: String,
-  },
-  date: {
-    type: Date,
-    default: new Date().toISOString(),
-  },
-});
-export const User: Model<IUser> = model("user", UserSchema);
+
+export const User: Model<IUser> = model(
+  "user",
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      // the profile avatar
+      type: String,
+    },
+    date: {
+      type: Date,
+      default: new Date().toISOString(),
+    },
+  })
+);
 
 // import { model, Schema, Model, Document } from "mongoose";
 
