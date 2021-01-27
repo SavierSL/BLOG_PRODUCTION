@@ -4,6 +4,7 @@ import { User, IUser } from "../models/User";
 import { validationResult } from "express-validator";
 import { Req, Res, Nxt } from "../TS/types";
 import { ObjectID, Binary } from "mongodb";
+
 import * as fs from "fs";
 import multer from "multer";
 const imageMimeTypes = ["image/jpeg", "image/png", "images/gif"];
@@ -52,7 +53,6 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
   const userID = ((req as any).user as { id: string }).id;
   const img = (req.body as { img: Buffer }).img;
 
-  console.log(req.file);
   try {
     const user: IUser | null = await User.findById(userID).select("-password");
     console.log(userID);

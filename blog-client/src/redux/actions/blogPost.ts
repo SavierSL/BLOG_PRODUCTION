@@ -9,7 +9,7 @@ export const blogPostAction = (
   title: string,
   blogContent: string,
   img: undefined | null | File,
-  token:string
+  token: string
 ): blogPostActionType => {
   return {
     type: types.BLOGPOST_SAGA,

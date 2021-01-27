@@ -43,6 +43,25 @@ const HomePage: React.FC<HomePageProps> = () => {
 
     console.log(blogPost);
   };
+  const toBase64 = (file: any) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      if (file.length === 1) {
+        reader.readAsDataURL(file[0]);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      }
+      return reader;
+    });
+
+  const newImage = toBase64(file);
+  const dataImage = async () => {
+    const newData = await newImage;
+    console.log(newData);
+    return newData;
+  };
+  dataImage();
   const handleInput = (e: any) => {
     e.preventDefault();
     setBlogPost({ ...blogPost, [e.target.name]: e.target.value, img: file[0] });
