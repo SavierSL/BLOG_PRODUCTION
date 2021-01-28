@@ -39,9 +39,10 @@ app.use((req: Req, res: Res, next) => {
 });
 
 //Parse the request
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(cookieParser());
+//so we can upload high image
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 // Rules of our API
 app.use((req: Req, res: Res, next: Nxt) => {

@@ -5,6 +5,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import Alert from "./alert/Alert";
 import { removeAlertAction } from "../redux/actions/alert";
 
+
 export interface FrontPageProps {}
 interface logInState {
   email: string;

@@ -1,4 +1,5 @@
 import { FilePond, registerPlugin } from "react-filepond";
+
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -6,7 +7,8 @@ import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { blogPostAction } from "../redux/actions/blogPost";
+import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
+import { NavLink, Redirect } from "react-router-dom";
 
 export interface HomePageProps {}
 interface BlogPost {
@@ -42,8 +44,10 @@ const HomePage: React.FC<HomePageProps> = () => {
     );
   };
   console.log(blogPost.imgType);
-
-  const handleSubmit = (e: any) => {
+  useEffect(() => {
+    dispatch(getAllPost());
+  }, []);
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(blogPostAction(title, blogContent, img, token, imgType));
 
@@ -116,6 +120,7 @@ const HomePage: React.FC<HomePageProps> = () => {
             </form>
           </div>
           <button onClick={(e) => handleSubmit(e)}>Submit</button>
+          <NavLink to="/blog-posts">blogpostsss</NavLink>
         </div>
       </div>
     </>
