@@ -108,6 +108,7 @@ function* blogPostSaga(action: any) {
     if (res.hasOwnProperty("msg")) {
       return yield put({ type: type.BLOGPOST_FAILED, payload: res });
     }
+    yield put({ type: type.GET_ALL_POST_FAILED, payload: res });
     return yield put({ type: type.BLOGPOST_SUCCESS, payload: res });
   } catch (error) {
     return yield put({ type: type.BLOGPOST_FAILED, payload: error });
@@ -133,22 +134,22 @@ const getAllPost = async () => {
 function* getAllPostSaga() {
   try {
     const res = yield getAllPost();
-    let newPosts: any[] = [];
-    const encodeDataToImage = () => {
-      newPosts = res.map((post: any) => {
-        if (res.length !== 0) {
-          const convertToBase64 = (image: any) => {
-            const buffit = Buffer.from(image);
-            post.image = `${buffit}`;
-          };
-          convertToBase64(post.img.data);
-          return post;
-        }
-      });
-    };
-    encodeDataToImage();
-    console.log(newPosts);
-    return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: newPosts });
+    // let newPosts: any[] = [];
+    // const encodeDataToImage = () => {
+    //   newPosts = res.map((post: any) => {
+    //     if (res.length !== 0) {
+    //       const convertToBase64 = (image: any) => {
+    //         const buffit = Buffer.from(image);
+    //         post.image = `${buffit}`;
+    //       };
+    //       convertToBase64(post.img.data);
+    //       return post;
+    //     }
+    //   });
+    // };
+    // encodeDataToImage();
+    // console.log(newPosts);
+    return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: res });
   } catch (error) {
     throw error;
   }

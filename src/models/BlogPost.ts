@@ -34,7 +34,7 @@ export const BlogPost: Model<IBlogPost> = model(
       trim: true,
     },
     img: {
-      type: Buffer,
+      type: String,
       default: "",
     },
     imgType: {

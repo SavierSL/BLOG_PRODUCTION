@@ -4,7 +4,7 @@ import { logInAction } from "../redux/actions/logIn";
 import { NavLink, Redirect } from "react-router-dom";
 import Alert from "./alert/Alert";
 import { removeAlertAction } from "../redux/actions/alert";
-
+import { getAllPost } from "../redux/actions/blogPost";
 
 export interface FrontPageProps {}
 interface logInState {

@@ -44,9 +44,7 @@ const HomePage: React.FC<HomePageProps> = () => {
     );
   };
   console.log(blogPost.imgType);
-  useEffect(() => {
-    dispatch(getAllPost());
-  }, []);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(blogPostAction(title, blogContent, img, token, imgType));
@@ -88,39 +86,43 @@ const HomePage: React.FC<HomePageProps> = () => {
           <button className="primary-button">
             <h2 className="secondary-heading">Create Blog </h2>
           </button>
-          <FilePond
-            files={file}
-            onupdatefiles={(file) => handleUpdateFIle(file)}
-            allowMultiple={true}
-            maxFiles={3}
-            name="files"
-            labelIdle='Drag  Drop your files or <span class="filepond--label-action">Browse</span>'
-          />
-          <div className="frontPage_form">
-            <form
-              className="primary-form"
-              action=""
-              onSubmit={(e) => handleSubmit(e)}
-            >
-              <input
-                className="primary-form_primary-input"
-                placeholder="title"
-                onChange={(e) => handleInput(e)}
-                name="title"
-                type="text"
-                value={blogPost.title}
-              />
-              <textarea
-                className="primary-form_primary-input"
-                placeholder="Caption"
-                onChange={(e) => handleInput(e)}
-                name="blogContent"
-                value={blogPost.blogContent}
-              />
-            </form>
+          <div className="homePage_createBlogContainer">
+            <FilePond
+              files={file}
+              onupdatefiles={(file) => handleUpdateFIle(file)}
+              allowMultiple={true}
+              maxFiles={3}
+              name="files"
+              labelIdle='Drag  Drop your files or <span class="filepond--label-action">Browse</span>'
+            />
+            <div className="frontPage_form">
+              <form
+                className="primary-form"
+                action=""
+                onSubmit={(e) => handleSubmit(e)}
+              >
+                <input
+                  className="primary-form_primary-input"
+                  placeholder="title"
+                  onChange={(e) => handleInput(e)}
+                  style={{ width: "80%" }}
+                  name="title"
+                  type="text"
+                  value={blogPost.title}
+                />
+                <textarea
+                  className="primary-form_primary-input"
+                  placeholder="Caption"
+                  style={{ width: "100%", height: "20rem" }}
+                  onChange={(e) => handleInput(e)}
+                  name="blogContent"
+                  value={blogPost.blogContent}
+                />
+              </form>
+            </div>
+            <button onClick={(e) => handleSubmit(e)}>Submit</button>
+            <NavLink to="/blog-posts">blogpostsss</NavLink>
           </div>
-          <button onClick={(e) => handleSubmit(e)}>Submit</button>
-          <NavLink to="/blog-posts">blogpostsss</NavLink>
         </div>
       </div>
     </>

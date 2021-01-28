@@ -47,9 +47,7 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
         <NavLink to="/home">home</NavLink>
         {posts.length !== 0
           ? posts.map((post: any) => {
-              return (
-                <img style={{ height: "50rem" }} src={post.image} alt="" />
-              );
+              return <img style={{ height: "50rem" }} src={post.img} alt="" />;
             })
           : ""}
       </div>

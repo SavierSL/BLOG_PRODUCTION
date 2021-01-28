@@ -2,4 +2,11 @@
   padding: 2rem 10rem 0 10rem;
   text-align: left;
   height: 100vh;
+  &_createBlogContainer {
+    padding: 4rem;
+    border-radius: 1rem;
+    border: solid 2px lightblue;
+    width: 80%;
+    margin: 0 auto 0 auto;
+  }
 }

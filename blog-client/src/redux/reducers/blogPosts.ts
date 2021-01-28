@@ -20,6 +20,12 @@ const blogPost = (state = initialState, action: Action) => {
         posts: payload,
       };
     }
+    case types.GET_ALL_POST_FAILED: {
+      return {
+        ...state,
+        posts: [...state.posts, payload],
+      };
+    }
     default: {
       return state;
     }

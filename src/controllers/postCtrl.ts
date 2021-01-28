@@ -51,8 +51,6 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
   const userID = ((req as any).user as { id: string }).id;
   const img = (req.body as { img: string }).img;
 
-  const buffer = Buffer.from(img, "base64");
-  console.log(buffer);
   try {
     const user: IUser | null = await User.findById(userID).select("-password");
     console.log(userID);
@@ -66,7 +64,7 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
       name: user.name,
       title: title,
       blogContent: blogContent,
-      img: buffer,
+      img: img,
       ...req.body,
     };
     // saveCover(post, img);
