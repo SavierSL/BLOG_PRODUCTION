@@ -13,6 +13,7 @@ interface BlogPost {
   title: string;
   blogContent: string;
   img: unknown | null | string;
+  imgType: string;
 }
 registerPlugin(
   FilePondPluginImageExifOrientation,
@@ -28,16 +29,23 @@ const HomePage: React.FC<HomePageProps> = () => {
     title: "",
     blogContent: "",
     img: null,
+    imgType: "",
   });
-  const { title, blogContent, img } = blogPost;
+  const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
-    setFiles(file.map((files: any) => files.file));
+    setFiles(
+      file.map((files: any) => {
+        const file = files.file;
+        setBlogPost({ ...blogPost, imgType: file.type });
+        return file;
+      })
+    );
   };
-  console.log(file);
+  console.log(blogPost.imgType);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(blogPostAction(title, blogContent, img, token));
+    dispatch(blogPostAction(title, blogContent, img, token, imgType));
 
     console.log(blogPost);
   };

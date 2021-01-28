@@ -10,6 +10,7 @@ export interface IBlogPost extends Document {
   likes?: object[];
   date: string;
   img: string;
+  imgType: string;
 }
 
 export const BlogPost: Model<IBlogPost> = model(

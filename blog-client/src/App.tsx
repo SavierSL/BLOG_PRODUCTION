@@ -9,6 +9,7 @@ import { ThemeProvider } from "styled-components";
 import { getTheme } from "./components/theme/getTheme";
 import { THEMES } from "./components/theme/types";
 import { Theme } from "./components/theme/styles";
+import BlogPosts from "./components/BlogPosts";
 
 export interface AppProps {}
 
@@ -35,6 +36,7 @@ const App: React.FC<AppProps> = () => {
                 <Route exact path="/" component={FrontPage} />
                 <Route exact path="/register" component={RegisterPage} />
                 <Route exact path="/home" component={HomePage} />
+                <Route exact path="/blog-posts" component={BlogPosts} />
               </Switch>
             </Router>
           </Theme>

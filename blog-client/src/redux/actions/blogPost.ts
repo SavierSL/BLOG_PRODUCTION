@@ -9,10 +9,16 @@ export const blogPostAction = (
   title: string,
   blogContent: string,
   img: unknown | null | File,
-  token: string
+  token: string,
+  imgType: string
 ): blogPostActionType => {
   return {
     type: types.BLOGPOST_SAGA,
-    payload: { title, blogContent, img, token },
+    payload: { title, blogContent, img, token, imgType },
+  };
+};
+export const getAllPost = () => {
+  return {
+    type: types.GET_ALL_POST_SAGA,
   };
 };

@@ -31,13 +31,11 @@ interface postType {
 //   },
 // });
 // function saveCover(post: postType, imgEncoded: any) {
-//   console.log("filepond");
-
-//   console.log(`${JSON.stringify(imgEncoded)} image`);
 //   if (imgEncoded === null) return;
 //   const img = JSON.parse(imgEncoded);
+//   console.log(img);
 //   if (img != null && imageMimeTypes.includes(img.type)) {
-//     post.img = Buffer.from(img.data, "base64");
+//     post.img = Buffer.from(img, "base64");
 //     post.imgType = img.type;
 //   }
 // }
@@ -52,8 +50,9 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
   const blogContent = (req.body as { blogContent: string }).blogContent;
   const userID = ((req as any).user as { id: string }).id;
   const img = (req.body as { img: string }).img;
+
   const buffer = Buffer.from(img, "base64");
-  console.log(buffer)
+  console.log(buffer);
   try {
     const user: IUser | null = await User.findById(userID).select("-password");
     console.log(userID);
@@ -77,6 +76,16 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
     res.json(newPost);
   } catch (error) {
     res.status(400).json({ msg: error });
+  }
+};
+
+//GET ALL POST
+export const GetAllPostCTRL = async (req: Req, res: Res) => {
+  try {
+    const posts: IBlogPost[] = await BlogPost.find();
+    res.json(posts);
+  } catch (error) {
+    res.status(400).json(error);
   }
 };
 

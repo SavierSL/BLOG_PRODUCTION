@@ -80,10 +80,11 @@ const blogPostData = async (
   title: string,
   blogContent: string,
   img: File,
-  token: string
+  token: string,
+  imgType: string
 ) => {
   console.log(img);
-  const body = { title, blogContent, img };
+  const body = { title, blogContent, img, imgType };
   const content = {
     method: "POST",
     headers: { "x-auth-token": token, "Content-type": "application/json" },
@@ -101,9 +102,9 @@ const blogPostData = async (
   return data;
 };
 function* blogPostSaga(action: any) {
-  const { title, blogContent, img, token } = action.payload;
+  const { title, blogContent, img, token, imgType } = action.payload;
   try {
-    const res = yield blogPostData(title, blogContent, img, token);
+    const res = yield blogPostData(title, blogContent, img, token, imgType);
     if (res.hasOwnProperty("msg")) {
       return yield put({ type: type.BLOGPOST_FAILED, payload: res });
     }
@@ -114,6 +115,31 @@ function* blogPostSaga(action: any) {
 }
 function* watchBlogPostSaga() {
   yield takeEvery(type.BLOGPOST_SAGA, blogPostSaga);
+}
+
+//GET ALL POST
+const getAllPost = async () => {
+  const content = { method: "GET" };
+  const data = await fetch(`${port}/post/blog-posts`, content)
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* getAllPostSaga() {
+  try {
+    const res = yield getAllPost();
+    return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: res });
+  } catch (error) {
+    throw error;
+  }
+}
+function* watchGetAllPostSaga() {
+  yield takeEvery(type.GET_ALL_POST_SAGA, getAllPostSaga);
 }
 
 function* removeAlertSaga() {
@@ -128,5 +154,6 @@ export default function* rootSaga() {
     watchrRgisterDataSaga(),
     watchRemoveAlertSaga(),
     watchBlogPostSaga(),
+    watchGetAllPostSaga(),
   ]);
 }

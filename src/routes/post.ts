@@ -8,6 +8,7 @@ import {
   BlogPostCommentCTRL,
   BlogPostDeleteCommentCTRL,
   BlogPostEditPostCTRL,
+  GetAllPostCTRL,
 } from "../controllers/postCtrl";
 const router = express.Router();
 
@@ -21,6 +22,11 @@ router.post("/blog-post", [
   check("blogContent", "Blog Content is required").not().isEmpty(),
   BlogPostCTRL,
 ]);
+
+//@METHOD GET
+//@get all blogpost
+//@api /post/blog-posts
+router.get("/blog-posts", GetAllPostCTRL);
 
 //@METHOD patch
 //@edit a blogpost

@@ -59,6 +59,7 @@ const post = (state = initialState, action: Action): InitialState => {
         msg: payload,
       };
     }
+
     default: {
       return state;
     }
