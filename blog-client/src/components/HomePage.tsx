@@ -5,6 +5,8 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
@@ -20,7 +22,8 @@ interface BlogPost {
 registerPlugin(
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview,
-  FilePondPluginFileEncode
+  FilePondPluginFileEncode,
+  FilePondPluginImageResize
 );
 
 const HomePage: React.FC<HomePageProps> = () => {
@@ -90,7 +93,6 @@ const HomePage: React.FC<HomePageProps> = () => {
             <FilePond
               files={file}
               onupdatefiles={(file) => handleUpdateFIle(file)}
-              allowMultiple={true}
               maxFiles={3}
               name="files"
               labelIdle='Drag  Drop your files or <span class="filepond--label-action">Browse</span>'
