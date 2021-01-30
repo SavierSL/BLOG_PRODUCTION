@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
 import { NavLink, Redirect } from "react-router-dom";
+import { getUserAction, getUserPostsAction } from "../redux/actions/users";
 
 export interface HomePageProps {}
 interface BlogPost {
@@ -29,13 +30,20 @@ registerPlugin(
 const HomePage: React.FC<HomePageProps> = () => {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.post.token);
+  const user = useSelector((state: any) => state.user.user);
   const [file, setFiles] = useState([]);
+  const posts = useSelector((state: any) => state.user.posts);
+  const loading = useSelector((state: any) => state.user.loadingPosts);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
     img: null,
     imgType: "",
   });
+  useEffect(() => {
+    dispatch(getUserAction(token));
+    dispatch(getUserPostsAction(token));
+  }, []);
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -81,15 +89,28 @@ const HomePage: React.FC<HomePageProps> = () => {
       img: updatedImage,
     });
   };
+  const userPosts = posts.map((post: any) => {
+    // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
+    return <p>{post.title}</p>;
+  });
+  const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
+
   return (
     <>
       <div className="homePage">
         <h1 className="primary-heading">BLOG IT</h1>
+        <h1 className="primary-heading">{user.name}</h1>
+        <div>
+          {" "}
+          <span>{user.email}</span>
+        </div>
+
+        {ifLoading}
         <div className="homePage_content">
-          <button className="primary-button">
-            <h2 className="secondary-heading">Create Blog </h2>
-          </button>
-          <div className="homePage_createBlogContainer">
+          <div
+            className="homePage_createBlogContainer"
+            // style={{ display: "none" }}
+          >
             <FilePond
               files={file}
               onupdatefiles={(file) => handleUpdateFIle(file)}

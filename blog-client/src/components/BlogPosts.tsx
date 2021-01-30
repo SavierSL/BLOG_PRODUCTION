@@ -8,13 +8,16 @@ export interface BlogPostsProps {}
 
 const BlogPosts: React.FC<BlogPostsProps> = () => {
   const blogPosts = useSelector((state: any) => state.blogPost.posts);
+  const loading = useSelector((state: any) => state.blogPost.loading);
+  const token = useSelector((state: any) => state.post.token);
+
   const posts = [...blogPosts];
   const dispatch = useDispatch();
 
   console.log(posts);
   console.log("1");
   useEffect(() => {
-    dispatch(getAllPost());
+    if (loading === true) dispatch(getAllPost());
     console.log("2");
   }, []);
   // const encodeDataToImage = () => {

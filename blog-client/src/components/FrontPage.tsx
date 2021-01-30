@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logInAction } from "../redux/actions/logIn";
 import { NavLink, Redirect } from "react-router-dom";
@@ -15,11 +15,15 @@ interface logInState {
 const FrontPage: React.FC<FrontPageProps> = () => {
   const error = useSelector((state: any) => state.post.msg);
   const isAuth = useSelector((state: any) => state.post.isAuth);
+
+
   const [logInInput, setLogInInput] = useState<logInState>({
     email: "",
     password: "",
   });
-
+  useEffect(() => {
+    dispatch(getAllPost());
+  }, []);
   const dispatch = useDispatch();
   const handleInput = (e: any) => {
     e.preventDefault();

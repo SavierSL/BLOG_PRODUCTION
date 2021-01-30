@@ -1,7 +1,11 @@
 .homePage {
-  padding: 2rem 10rem 0 10rem;
+  padding: 3rem;
   text-align: left;
-  height: 100vh;
+  height: 90vh;
+  background: red;
+  width: 90vw;
+  margin: 2rem auto 0rem auto;
+  border-radius: 2rem;
   &_createBlogContainer {
     padding: 4rem;
     border-radius: 1rem;

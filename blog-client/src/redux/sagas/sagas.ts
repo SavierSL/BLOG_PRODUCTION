@@ -1,4 +1,4 @@
-import { all, put, takeEvery } from "redux-saga/effects";
+import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
 import * as type from "../actions/types";
 const port = "http://localhost:5000";
 //login
@@ -108,6 +108,18 @@ function* blogPostSaga(action: any) {
     if (res.hasOwnProperty("msg")) {
       return yield put({ type: type.BLOGPOST_FAILED, payload: res });
     }
+
+    const ecodeDataToImage = () => {
+      if (res) {
+        const converToBase64 = (img: any) => {
+          const buffit = Buffer.from(img);
+          res.image = `${buffit}`;
+        };
+        converToBase64(res.img);
+      }
+    };
+    ecodeDataToImage();
+
     yield put({ type: type.GET_ALL_POST_FAILED, payload: res });
     return yield put({ type: type.BLOGPOST_SUCCESS, payload: res });
   } catch (error) {
@@ -148,14 +160,50 @@ function* getAllPostSaga() {
       });
     };
     encodeDataToImage();
-    console.log(newPosts);
+
     return yield put({ type: type.GET_ALL_POST_SUCCESS, payload: newPosts });
   } catch (error) {
     throw error;
   }
 }
 function* watchGetAllPostSaga() {
-  yield takeEvery(type.GET_ALL_POST_SAGA, getAllPostSaga);
+  yield takeLatest(type.GET_ALL_POST_SAGA, getAllPostSaga);
+}
+
+const getUserData = async (token: string) => {
+  console.log(token);
+  const content = {
+    method: "GET",
+    headers: {
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(`${port}/users/get-user`, content)
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+
+function* getUserSaga(action: any) {
+  const { token } = action.payload;
+  console.log(token);
+  try {
+    const res = yield getUserData(token);
+    if (res.hasOwnProperty("msg")) {
+      return yield put({ type: type.GET_USER_FAILED, payload: res });
+    }
+    return yield put({ type: type.GET_USER_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.GET_USER_FAILED, payload: error });
+  }
+}
+function* watchGetUserSaga() {
+  yield takeEvery(type.GET_USER_SAGA, getUserSaga);
 }
 
 function* removeAlertSaga() {
@@ -164,6 +212,55 @@ function* removeAlertSaga() {
 function* watchRemoveAlertSaga() {
   yield takeEvery(type.ALERT_SAGA, removeAlertSaga);
 }
+
+//GET USER POSTS
+const getUserPosts = async (token: string) => {
+  const content = {
+    mthod: "GET",
+    headers: {
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(`${port}/users/user-posts`, content)
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* getUserPostsSaga(action: any) {
+  const { token } = action.payload;
+  try {
+    const res = yield getUserPosts(token);
+    if (res.hasOwnProperty("msg")) {
+      return yield put({ type: type.GET_USER_POSTS_FAILED, payload: res });
+    }
+    // let newPosts: any[] = [];
+    // const encodeDataToImage = () => {
+    //   newPosts = res.map((post: any) => {
+    //     if (res.length !== 0) {
+    //       const convertToBase64 = (image: any) => {
+    //         const buffit = Buffer.from(image);
+    //         post.image = `${buffit}`;
+    //       };
+    //       convertToBase64(post.img.data);
+    //       return post;
+    //     }
+    //   });
+    // };
+    // encodeDataToImage();
+    yield put({ type: type.GET_USER_POSTS_SUCCESS, payload: res });
+  } catch (error) {
+    return yield put({ type: type.GET_USER_POSTS_FAILED, payload: error });
+  }
+}
+function* watchGetUserPostsSaga() {
+  yield takeEvery(type.GET_USER_POSTS_SAGA, getUserPostsSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchLogInSaga(),
@@ -171,5 +268,7 @@ export default function* rootSaga() {
     watchRemoveAlertSaga(),
     watchBlogPostSaga(),
     watchGetAllPostSaga(),
+    watchGetUserSaga(),
+    watchGetUserPostsSaga(),
   ]);
 }

@@ -1,5 +1,5 @@
 import * as types from "../actions/types";
-export interface InitialState {
+ interface InitialState {
   token: null | string;
   loading: boolean;
   msg: {};

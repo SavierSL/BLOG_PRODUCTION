@@ -1,10 +1,12 @@
 import * as types from "../actions/types";
 
-export interface InitalStateBlogPost {
+interface InitalStateBlogPost {
   posts: [];
+  loading: boolean;
 }
 export const initialState: InitalStateBlogPost = {
   posts: [],
+  loading: true,
 };
 interface Action {
   type: string;
@@ -18,6 +20,7 @@ const blogPost = (state = initialState, action: Action) => {
       return {
         ...state,
         posts: payload,
+        loading: false,
       };
     }
     case types.GET_ALL_POST_FAILED: {

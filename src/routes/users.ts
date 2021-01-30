@@ -1,6 +1,11 @@
 import express, { Request, Response } from "express";
 import { check, validationResult } from "express-validator";
-import { registerUserCTRL } from "../controllers/userCtrls";
+import {
+  getUserPostsCTRL,
+  getUsersCTRL,
+  registerUserCTRL,
+} from "../controllers/userCtrls";
+import { auth } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -18,5 +23,14 @@ router.post(
   ],
   registerUserCTRL
 );
+
+//@METHOD get
+//@Get User
+//@api /users/get-user
+router.get("/get-user", auth, getUsersCTRL);
+//@METHOD get
+//@Get user posts
+//@api /users/user-posts
+router.get("/user-posts", auth, getUserPostsCTRL);
 
 export default { router };
