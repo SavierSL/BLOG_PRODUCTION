@@ -53,6 +53,14 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
             ? posts.map((post: any) => {
                 return (
                   <div className="blogContentContainer-content">
+                    <div className="blogContentContainer-content-box">
+                      <div className="blogContentContainer-content-box-color"></div>
+                      <div className="blogContentContainer-content-box-details">
+                        <h1 className="blogContentContainer-content-box-details-txt">
+                          {`${post.name}'s blog`}
+                        </h1>
+                      </div>
+                    </div>
                     <img
                       className="blogContentContainer-content-image"
                       src={post.image}
