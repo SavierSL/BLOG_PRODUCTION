@@ -2,7 +2,6 @@
   padding: 3rem;
   text-align: left;
   height: 90vh;
-  background: red;
   width: 90vw;
   margin: 2rem auto 0rem auto;
   border-radius: 2rem;
@@ -12,5 +11,20 @@
     border: solid 2px lightblue;
     width: 80%;
     margin: 0 auto 0 auto;
+  }
+}
+.homeBlogContainer {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  border-radius: 1rem;
+  padding: 2rem;
+  background: rgb(253, 248, 248);
+  &_blogs {
+    border-radius: 1rem;
+    margin: 1rem;
+    background: rgb(46, 1, 42);
+    padding: 2rem;
+    height: 8rem;
   }
 }

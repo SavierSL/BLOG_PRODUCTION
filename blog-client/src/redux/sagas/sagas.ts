@@ -119,8 +119,7 @@ function* blogPostSaga(action: any) {
       }
     };
     ecodeDataToImage();
-
-    yield put({ type: type.GET_ALL_POST_FAILED, payload: res });
+    yield put({ type: type.NEW_USER_POST_SUCCESS, payload: res });
     return yield put({ type: type.BLOGPOST_SUCCESS, payload: res });
   } catch (error) {
     return yield put({ type: type.BLOGPOST_FAILED, payload: error });
@@ -129,6 +128,20 @@ function* blogPostSaga(action: any) {
 function* watchBlogPostSaga() {
   yield takeEvery(type.BLOGPOST_SAGA, blogPostSaga);
 }
+
+// //NEW USER POST
+// function* newUserPost(action: any) {
+//   const { blogPost } = action.payload;
+
+//   try {
+//     yield put({ type: type.NEW_USER_POST_SUCCESS, payload: blogPost });
+//   } catch (error) {
+//     yield put({ type: type.NEW_USER_POST_FAILED, payload: error });
+//   }
+// }
+// function* watchNewUserPostSaga() {
+//   yield takeEvery(type.NEW_USER_POST_SAGA, newUserPost);
+// }
 
 //GET ALL POST
 const getAllPost = async () => {

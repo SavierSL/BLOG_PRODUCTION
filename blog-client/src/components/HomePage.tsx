@@ -11,10 +11,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
 import { NavLink, Redirect } from "react-router-dom";
-import { getUserAction, getUserPostsAction } from "../redux/actions/users";
+import {
+  getUserAction,
+  getUserPostsAction,
+  newPostUserAction,
+} from "../redux/actions/users";
 
-export interface HomePageProps {}
-interface BlogPost {
+export interface HomePageProps {
+  theme: string;
+}
+export interface BlogPost {
   title: string;
   blogContent: string;
   img: unknown | null | string;
@@ -27,10 +33,11 @@ registerPlugin(
   FilePondPluginImageResize
 );
 
-const HomePage: React.FC<HomePageProps> = () => {
+const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.post.token);
   const user = useSelector((state: any) => state.user.user);
+  const [submitted, setSubmitted] = useState(false);
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
@@ -43,7 +50,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   useEffect(() => {
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));
-  }, []);
+  }, [token, dispatch]);
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -89,9 +96,24 @@ const HomePage: React.FC<HomePageProps> = () => {
       img: updatedImage,
     });
   };
+  const styleThemeT = {
+    color: theme === "LIGHT" ? "#fff" : "#000",
+  };
+  const styleThemeB = {
+    background: theme === "LIGHT" ? "#000" : "#fff",
+  };
+  const styleThemeBMain = {
+    background: theme === "LIGHT" ? "#fff" : "none",
+  };
   const userPosts = posts.map((post: any) => {
     // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
-    return <p>{post.title}</p>;
+
+    return (
+      <div style={styleThemeB} className="homeBlogContainer_blogs">
+        <p style={styleThemeT}>{post.title}</p>
+        <p style={styleThemeT}>{post.date}</p>
+      </div>
+    );
   });
   const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
 
@@ -101,11 +123,12 @@ const HomePage: React.FC<HomePageProps> = () => {
         <h1 className="primary-heading">BLOG IT</h1>
         <h1 className="primary-heading">{user.name}</h1>
         <div>
-          {" "}
           <span>{user.email}</span>
         </div>
+        <div style={styleThemeBMain} className="homeBlogContainer">
+          {ifLoading}
+        </div>
 
-        {ifLoading}
         <div className="homePage_content">
           <div
             className="homePage_createBlogContainer"

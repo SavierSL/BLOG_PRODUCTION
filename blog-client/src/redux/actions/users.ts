@@ -1,3 +1,4 @@
+import { BlogPost } from "../../components/HomePage";
 import * as types from "./types";
 interface getUseActionType {
   type: string;
@@ -14,5 +15,12 @@ export const getUserPostsAction = (token: string): getUseActionType => {
   return {
     type: types.GET_USER_POSTS_SAGA,
     payload: { token },
+  };
+};
+
+export const newPostUserAction = (blogPost: BlogPost) => {
+  return {
+    type: types.NEW_USER_POST_SAGA,
+    payload: { blogPost },
   };
 };

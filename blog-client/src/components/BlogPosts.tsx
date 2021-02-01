@@ -48,13 +48,24 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
       <div className="blogPostsContainer">
         <h1>Blog Posts</h1>
         <NavLink to="/home">home</NavLink>
-        {posts.length !== 0
-          ? posts.map((post: any) => {
-              return (
-                <img style={{ height: "50rem" }} src={post.image} alt="" />
-              );
-            })
-          : ""}
+        <div className="blogContentContainer">
+          {posts.length !== 0
+            ? posts.map((post: any) => {
+                return (
+                  <div className="blogContentContainer-content">
+                    <img
+                      className="blogContentContainer-content-image"
+                      src={post.image}
+                      alt=""
+                    />
+                    <div className="blogContentContainer-content-details">
+                      <h1>{post.title}</h1>
+                    </div>
+                  </div>
+                );
+              })
+            : ""}
+        </div>
       </div>
     </>
   );

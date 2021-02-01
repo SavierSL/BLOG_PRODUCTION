@@ -46,6 +46,15 @@ const user = (state = initialState, action: Action) => {
         loadingPosts: false,
       };
     }
+    case types.NEW_USER_POST_SUCCESS: {
+      return {
+        ...state,
+        msg: payload,
+        loadingPosts: false,
+        posts: [...state.posts, payload],
+      };
+    }
+
     default: {
       return state;
     }

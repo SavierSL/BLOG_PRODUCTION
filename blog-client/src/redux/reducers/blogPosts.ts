@@ -23,7 +23,7 @@ const blogPost = (state = initialState, action: Action) => {
         loading: false,
       };
     }
-    case types.GET_ALL_POST_FAILED: {
+    case types.BLOGPOST_SUCCESS: {
       return {
         ...state,
         posts: [...state.posts, payload],

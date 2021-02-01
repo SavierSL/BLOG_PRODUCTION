@@ -6,17 +6,18 @@ import Alert from "./alert/Alert";
 import { removeAlertAction } from "../redux/actions/alert";
 import { getAllPost } from "../redux/actions/blogPost";
 
-export interface FrontPageProps {}
+export interface FrontPageProps {
+  theme: any;
+}
 interface logInState {
   email: string;
   password: string;
 }
 
-const FrontPage: React.FC<FrontPageProps> = () => {
+const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
   const error = useSelector((state: any) => state.post.msg);
   const isAuth = useSelector((state: any) => state.post.isAuth);
-
-
+  console.log(theme);
   const [logInInput, setLogInInput] = useState<logInState>({
     email: "",
     password: "",

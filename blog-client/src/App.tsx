@@ -25,6 +25,7 @@ const App: React.FC<AppProps> = () => {
     ) : (
       <button onClick={(e) => handleTheme(e)}>dark mode</button>
     );
+
   return (
     <>
       <ThemeProvider theme={getTheme(theme)}>
@@ -33,9 +34,17 @@ const App: React.FC<AppProps> = () => {
             <Router>
               {buttonTheme}
               <Switch>
-                <Route exact path="/" component={FrontPage} />
+                <Route
+                  exact
+                  path="/"
+                  render={() => <FrontPage theme={theme} />}
+                />
                 <Route exact path="/register" component={RegisterPage} />
-                <Route exact path="/home" component={HomePage} />
+                <Route
+                  exact
+                  path="/home"
+                  render={() => <HomePage theme={theme} />}
+                />
                 <Route exact path="/blog-posts" component={BlogPosts} />
               </Switch>
             </Router>

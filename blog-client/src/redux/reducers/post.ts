@@ -1,5 +1,5 @@
 import * as types from "../actions/types";
- interface InitialState {
+interface InitialState {
   token: null | string;
   loading: boolean;
   msg: {};
@@ -17,6 +17,7 @@ interface Action {
   type: string;
   payload: string;
 }
+
 const post = (state = initialState, action: Action): InitialState => {
   const { type, payload } = action;
   switch (type) {
