@@ -14,6 +14,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import {
   getUserAction,
   getUserPostsAction,
+  logOutUser,
   newPostUserAction,
 } from "../redux/actions/users";
 
@@ -35,9 +36,9 @@ registerPlugin(
 
 const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const dispatch = useDispatch();
-  const token = useSelector((state: any) => state.post.token);
+  const token = localStorage.getItem("token");
   const user = useSelector((state: any) => state.user.user);
-  const [submitted, setSubmitted] = useState(false);
+  const isAuth = useSelector((state: any) => state.post.isAuth);
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
@@ -61,7 +62,6 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       })
     );
   };
-  console.log(blogPost.imgType);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -116,10 +116,19 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     );
   });
   const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
+  const handleLogout = () => {
+    console.log("logout");
+    console.log(token);
 
+    dispatch(logOutUser());
+  };
+  if (!isAuth) {
+    return <Redirect to="/" />;
+  }
   return (
     <>
       <div className="homePage">
+        <button onClick={() => handleLogout()}>LOG OUT</button>
         <h1 className="primary-heading">BLOG IT</h1>
         <h1 className="primary-heading">{user.name}</h1>
         <div>

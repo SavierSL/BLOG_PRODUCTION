@@ -60,7 +60,14 @@ const post = (state = initialState, action: Action): InitialState => {
         msg: payload,
       };
     }
-
+    case types.LOG_OUT_SUCCESS: {
+      window.localStorage.removeItem("token");
+      return {
+        ...state,
+        isAuth: false,
+        token: null,
+      };
+    }
     default: {
       return state;
     }

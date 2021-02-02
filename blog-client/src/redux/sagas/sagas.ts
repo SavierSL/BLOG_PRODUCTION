@@ -184,7 +184,6 @@ function* watchGetAllPostSaga() {
 }
 
 const getUserData = async (token: string) => {
-  console.log(token);
   const content = {
     method: "GET",
     headers: {
@@ -274,6 +273,52 @@ function* watchGetUserPostsSaga() {
   yield takeEvery(type.GET_USER_POSTS_SAGA, getUserPostsSaga);
 }
 
+//GET USER POST
+const getPost = async (id: string) => {
+  const content = { method: "GET" };
+  const data = await fetch(`${port}/post/blog-posts/${id}`, content)
+    .then(async (res) => {
+      const data = res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* getPostSaga(action: any) {
+  const { id } = action.payload;
+  try {
+    const res = yield getPost(id);
+    yield put({ type: type.POST_LINK_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.POST_LINK_SUCCESS, payload: error });
+  }
+}
+function* watchGetPostSaga() {
+  yield takeEvery(type.POST_LINK_SAGA, getPostSaga);
+}
+
+//exit post
+function* exitUserPostSaga() {
+  yield put({ type: type.EXIT_USER_POST_SUCESS });
+}
+function* watchExitUserPostSaga() {
+  yield takeEvery(type.EXIT_USER_POST_SAGA, exitUserPostSaga);
+}
+
+//LOG OUT
+function* logOutSaga() {
+  try {
+    yield put({ type: type.LOG_OUT_SUCCESS });
+  } catch (error) {
+    yield put({ type: type.LOG_OUT_FAILED });
+  }
+}
+function* watchLogOutSaga() {
+  yield takeEvery(type.LOG_OUT_SAGA, logOutSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchLogInSaga(),
@@ -283,5 +328,8 @@ export default function* rootSaga() {
     watchGetAllPostSaga(),
     watchGetUserSaga(),
     watchGetUserPostsSaga(),
+    watchGetPostSaga(),
+    watchExitUserPostSaga(),
+    watchLogOutSaga(),
   ]);
 }

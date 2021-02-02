@@ -1,15 +1,31 @@
 import * as types from "../actions/types";
+import { ObjectID } from "mongodb";
+export interface IBlogPost extends Document {
+  user: ObjectID;
+  name: string;
+  title: string;
+  blogContent: string;
+  comments?: object[];
+  likes?: object[];
+  date: string;
+  img: string;
+  imgType: string;
+}
 interface InitialUserState {
   user: {};
   msg: any;
   posts: [];
   loadingPosts: boolean;
+  post: IBlogPost | null;
+  loading: boolean;
 }
 export const initialState: InitialUserState = {
   user: {},
   msg: "",
   posts: [],
   loadingPosts: true,
+  post: null,
+  loading: true,
 };
 interface Action {
   type: string;
@@ -30,6 +46,7 @@ const user = (state = initialState, action: Action) => {
         ...state,
         user: {},
         msg: payload,
+        loading: false,
       };
     }
     case types.GET_USER_POSTS_SUCCESS: {
@@ -54,7 +71,19 @@ const user = (state = initialState, action: Action) => {
         posts: [...state.posts, payload],
       };
     }
-
+    case types.POST_LINK_SUCCESS: {
+      return {
+        ...state,
+        post: payload,
+        loading: false,
+      };
+    }
+    case types.EXIT_USER_POST_SUCESS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
     default: {
       return state;
     }

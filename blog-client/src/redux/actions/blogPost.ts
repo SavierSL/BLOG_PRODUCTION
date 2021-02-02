@@ -9,7 +9,7 @@ export const blogPostAction = (
   title: string,
   blogContent: string,
   img: unknown | null | File,
-  token: string,
+  token: string | null,
   imgType: string
 ): blogPostActionType => {
   return {
@@ -20,5 +20,12 @@ export const blogPostAction = (
 export const getAllPost = () => {
   return {
     type: types.GET_ALL_POST_SAGA,
+  };
+};
+
+export const getUserPost = (id: string) => {
+  return {
+    type: types.POST_LINK_SAGA,
+    payload: { id },
   };
 };

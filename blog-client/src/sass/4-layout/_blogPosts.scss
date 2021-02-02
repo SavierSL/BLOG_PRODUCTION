@@ -1,19 +1,21 @@
 .blogPostsContainer {
   padding: 5rem;
   height: 100%;
-  background: black;
+  background: rgb(255, 255, 255);
 }
 .blogContentContainer {
   display: grid;
   grid-template-columns: 33% 33% 33%;
   padding: 2rem;
+  background: rgb(255, 255, 254);
+  border-radius: 1rem;
 
   &-content {
     position: relative;
     margin: 1rem;
     height: 90%;
     padding: 2rem;
-    border: solid 1.8px white;
+    border: solid 1.8px rgb(216, 216, 216);
     border-radius: 1rem;
     transition: all 1s;
 

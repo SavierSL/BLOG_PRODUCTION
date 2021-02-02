@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPost } from "../redux/actions/blogPost";
 import { NavLink, Redirect } from "react-router-dom";
 import blogPost from "../redux/reducers/blogPosts";
+import BlogPost from "./mincomponents/blogPost";
 
 export interface BlogPostsProps {}
 
@@ -51,26 +52,7 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
         <div className="blogContentContainer">
           {posts.length !== 0
             ? posts.map((post: any) => {
-                return (
-                  <div className="blogContentContainer-content">
-                    <div className="blogContentContainer-content-box">
-                      <div className="blogContentContainer-content-box-color"></div>
-                      <div className="blogContentContainer-content-box-details">
-                        <h1 className="blogContentContainer-content-box-details-txt">
-                          {`${post.name}'s blog`}
-                        </h1>
-                      </div>
-                    </div>
-                    <img
-                      className="blogContentContainer-content-image"
-                      src={post.image}
-                      alt=""
-                    />
-                    <div className="blogContentContainer-content-details">
-                      <h1>{post.title}</h1>
-                    </div>
-                  </div>
-                );
+                return <BlogPost post={post} />;
               })
             : ""}
         </div>

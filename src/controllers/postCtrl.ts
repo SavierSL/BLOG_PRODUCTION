@@ -88,6 +88,18 @@ export const GetAllPostCTRL = async (req: Req, res: Res) => {
     res.status(400).json(error);
   }
 };
+export const GetPostUser = async (req: Req, res: Res) => {
+  const postID = ((req as any).params as { post_id: string }).post_id;
+  try {
+    const user: IBlogPost | null = await BlogPost.findById(postID);
+    if (!user) {
+      return res.status(400).json({ msg: [{ msg: "Cannot find user post" }] });
+    }
+    res.json(user);
+  } catch (error) {
+    return res.status(400).json({ msg: [{ msg: error }] });
+  }
+};
 
 //EDIT POST
 export const BlogPostEditPostCTRL = async (req: Req, res: Res) => {

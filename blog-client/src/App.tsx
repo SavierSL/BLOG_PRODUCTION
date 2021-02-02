@@ -5,6 +5,7 @@ import store from "./redux/store";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
+import UserPost from "./components/UserPost";
 import { ThemeProvider } from "styled-components";
 import { getTheme } from "./components/theme/getTheme";
 import { THEMES } from "./components/theme/types";
@@ -44,6 +45,11 @@ const App: React.FC<AppProps> = () => {
                   exact
                   path="/home"
                   render={() => <HomePage theme={theme} />}
+                />
+                <Route
+                  exact
+                  path="/user-post/:params_id"
+                  render={(props) => <UserPost props={props} />}
                 />
                 <Route exact path="/blog-posts" component={BlogPosts} />
               </Switch>

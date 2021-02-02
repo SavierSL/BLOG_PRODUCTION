@@ -9,6 +9,7 @@ import {
   BlogPostDeleteCommentCTRL,
   BlogPostEditPostCTRL,
   GetAllPostCTRL,
+  GetPostUser,
 } from "../controllers/postCtrl";
 const router = express.Router();
 
@@ -27,6 +28,8 @@ router.post("/blog-post", [
 //@get all blogpost
 //@api /post/blog-posts
 router.get("/blog-posts", GetAllPostCTRL);
+
+router.get("/blog-posts/:post_id", GetPostUser);
 
 //@METHOD patch
 //@edit a blogpost
