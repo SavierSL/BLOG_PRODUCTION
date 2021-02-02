@@ -4,13 +4,13 @@
   align-items: center;
 
   &_primary-input {
-    width: 30rem;
-    margin-top: 1rem;
+    width: 35rem;
+    margin-top: 3rem;
     padding: 0.5rem;
     border-radius: 0.7rem;
     border: none;
     background: rgb(255, 243, 205);
-    height: 4rem;
+    height: 5rem;
   }
   &_primary-button {
     margin-top: 1rem;
@@ -18,5 +18,11 @@
     width: 10rem;
     border-radius: 1rem;
     border: none;
+    width: 35rem;
+    margin: 2rem;
+    cursor: pointer;
+    &:hover {
+      background: darken($color: #00aeef, $amount: 5);
+    }
   }
 }

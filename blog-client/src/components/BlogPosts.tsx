@@ -4,6 +4,7 @@ import { getAllPost } from "../redux/actions/blogPost";
 import { NavLink, Redirect } from "react-router-dom";
 import blogPost from "../redux/reducers/blogPosts";
 import BlogPost from "./mincomponents/blogPost";
+import Loader from "./mincomponents/loader";
 
 export interface BlogPostsProps {}
 
@@ -43,22 +44,23 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
   //     };
   //     convertToBase64(blogPosts[0]);
   //   }
-
-  return (
-    <>
-      <div className="blogPostsContainer">
-        <h1>Blog Posts</h1>
-        <NavLink to="/home">home</NavLink>
-        <div className="blogContentContainer">
-          {posts.length !== 0
-            ? posts.map((post: any) => {
-                return <BlogPost post={post} />;
-              })
-            : ""}
-        </div>
+  const postsContents = loading ? (
+    <Loader />
+  ) : (
+    <div className="blogPostsContainer">
+      <h1>Blog Posts</h1>
+      <NavLink to="/home">home</NavLink>
+      <div className="blogContentContainer">
+        {posts.length !== 0
+          ? posts.map((post: any) => {
+              return <BlogPost post={post} />;
+            })
+          : ""}
       </div>
-    </>
+    </div>
   );
+
+  return <>{postsContents}</>;
 };
 
 export default BlogPosts;

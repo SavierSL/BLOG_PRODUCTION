@@ -41,7 +41,9 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
     <Loader />
   ) : (
     <div className="userPostContainer">
-      <button onClick={(e) => handleExit(e)}>BACK</button>
+      <button className="primary-button" onClick={(e) => handleExit(e)}>
+        BACK
+      </button>
       <div className="userPostContainer__userBlogPost">
         <h1 className="userPostContainer__userBlogPost-title">
           {post && post.title}

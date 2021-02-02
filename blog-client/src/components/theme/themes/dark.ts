@@ -5,7 +5,7 @@ export default {
   background: "black",
   color: "#fff",
   button: {
-    color: "black",
-    background: "yellow",
+    color: "white",
+    background: "#00aeef",
   },
 };

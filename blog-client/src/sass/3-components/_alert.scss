@@ -1,8 +1,9 @@
 .alertContainer {
-  background: rgb(255, 140, 140);
+  background: rgb(247, 164, 164);
   padding: 0.5rem;
-  margin: 0.5rem auto 0.5rem auto;
-  width: 80%;
+  margin: 0.5rem auto 0 auto;
+  width: 30rem;
+  border-radius: 1rem;
   &_red-alert {
     font-weight: 700;
     font-size: 1.2rem;

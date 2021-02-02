@@ -20,11 +20,25 @@ const App: React.FC<AppProps> = () => {
     e.preventDefault();
     theme === "LIGHT" ? setTheme(THEMES.DARK) : setTheme(THEMES.LIGHT);
   };
+  const buttonStyle: any = {
+    position: "absolute",
+    borderRadius: "1rem",
+    margin: "2.5rem",
+    border: "none",
+    padding: "1rem",
+    cursor: "pointer",
+    right: "0",
+    top: "0",
+  };
   const buttonTheme =
     theme === "DARK" ? (
-      <button onClick={(e) => handleTheme(e)}>light mode</button>
+      <button style={buttonStyle} onClick={(e) => handleTheme(e)}>
+        light mode
+      </button>
     ) : (
-      <button onClick={(e) => handleTheme(e)}>dark mode</button>
+      <button style={buttonStyle} onClick={(e) => handleTheme(e)}>
+        dark mode
+      </button>
     );
 
   return (

@@ -47,8 +47,9 @@ const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
       <div className="frontPageContainer">
         <div className="frontPage">
           <div className="frontPage_content">
-            <h1 className="primary-heading">BLOG IT</h1>
-            <h1 className="primary-heading">LOG IN</h1>
+            <h1 className="primary-heading">
+              BLOG <span style={{ color: "#00aeef" }}>IT</span>
+            </h1>
             <div className="frontPage_form">
               <Alert error={error} />
               <form
@@ -75,12 +76,12 @@ const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
                 <button className="primary-form_primary-button">LOG IN</button>
               </form>
               <h2>
+                <span>You still don't have an account?</span>{" "}
                 <NavLink to="/register">Register</NavLink>
               </h2>
             </div>
           </div>
         </div>
-        <div className="frontPage2"></div>{" "}
       </div>
     </>
   );
