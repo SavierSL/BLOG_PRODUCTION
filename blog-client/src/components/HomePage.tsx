@@ -152,7 +152,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <button onClick={(e) => handleLogout(e)} className="logOutBtn">
           LOG OUT
         </button>
-        <h1 className="secondary-heading">BLOG IT</h1>
+
         <h1 className="tertiary-heading">{user.name}</h1>
         <div>
           <span className="primary-span">{user.email}</span>

@@ -6,40 +6,18 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
 import UserPost from "./components/UserPost";
+import Nav from "./components/Nav";
 import { ThemeProvider } from "styled-components";
 import { getTheme } from "./components/theme/getTheme";
 import { THEMES } from "./components/theme/types";
 import { Theme } from "./components/theme/styles";
+
 import BlogPosts from "./components/BlogPosts";
 
 export interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
   const [theme, setTheme] = useState<string>(THEMES.LIGHT);
-  const handleTheme = (e: any) => {
-    e.preventDefault();
-    theme === "LIGHT" ? setTheme(THEMES.DARK) : setTheme(THEMES.LIGHT);
-  };
-  const buttonStyle: any = {
-    position: "absolute",
-    borderRadius: "1rem",
-    margin: "2.5rem",
-    border: "none",
-    padding: "1rem",
-    cursor: "pointer",
-    right: "0",
-    top: "0",
-  };
-  const buttonTheme =
-    theme === "DARK" ? (
-      <button style={buttonStyle} onClick={(e) => handleTheme(e)}>
-        light mode
-      </button>
-    ) : (
-      <button style={buttonStyle} onClick={(e) => handleTheme(e)}>
-        dark mode
-      </button>
-    );
 
   return (
     <>
@@ -47,7 +25,7 @@ const App: React.FC<AppProps> = () => {
         <Provider store={store}>
           <Theme>
             <Router>
-              {buttonTheme}
+              <Nav theme={theme} setTheme={setTheme} />
               <Switch>
                 <Route
                   exact
