@@ -38,7 +38,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const user = useSelector((state: any) => state.user.user);
-  const isAuth = useSelector((state: any) => state.post.isAuth);
+
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
@@ -105,21 +105,35 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     });
   };
   const styleThemeT = {
-    color: theme === "LIGHT" ? "#fff" : "#000",
+    color: theme === "LIGHT" ? "#000" : "#fff",
   };
   const styleThemeB = {
-    background: theme === "LIGHT" ? "#000" : "#fff",
+    background: theme === "LIGHT" ? "#fff" : "#000",
   };
   const styleThemeBMain = {
-    background: theme === "LIGHT" ? "#fff" : "none",
+    background: theme === "LIGHT" ? "#f1f2f2" : "#005068",
   };
   const userPosts = posts.map((post: any) => {
     // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
 
     return (
       <div style={styleThemeB} className="homeBlogContainer_blogs">
-        <p style={styleThemeT}>{post.title}</p>
-        <p style={styleThemeT}>{post.date}</p>
+        <img
+          className="homeBlogContainer_blogs-image"
+          src={user.avatar}
+          alt=""
+        />
+        <div className="homeBlogContainer_blogs-details">
+          <p className="primary-p" style={styleThemeT}>
+            {post.title} <span> - {user.name}</span>
+          </p>
+          <p className="primary-p" style={styleThemeT}>
+            {post.date}
+          </p>
+          <p style={{ color: "#00aeef" }} className="primary-p">
+            {user.email}
+          </p>
+        </div>
       </div>
     );
   });
@@ -135,11 +149,13 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   return (
     <>
       <div className="homePage">
-        <button onClick={(e) => handleLogout(e)}>LOG OUT</button>
-        <h1 className="primary-heading">BLOG IT</h1>
-        <h1 className="primary-heading">{user.name}</h1>
+        <button onClick={(e) => handleLogout(e)} className="logOutBtn">
+          LOG OUT
+        </button>
+        <h1 className="secondary-heading">BLOG IT</h1>
+        <h1 className="tertiary-heading">{user.name}</h1>
         <div>
-          <span>{user.email}</span>
+          <span className="primary-span">{user.email}</span>
         </div>
         <div style={styleThemeBMain} className="homeBlogContainer">
           {ifLoading}
@@ -148,7 +164,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <div className="homePage_content">
           <div
             className="homePage_createBlogContainer"
-            style={{ display: "none" }}
+            // style={{ display: "none" }}
           >
             <FilePond
               files={file}
