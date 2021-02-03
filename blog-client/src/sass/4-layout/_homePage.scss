@@ -1,8 +1,8 @@
 .homePage {
   padding: 3rem;
   text-align: left;
-  height: 90vh;
-  width: 90vw;
+  height: 100%;
+  width: 100%;
   margin: 2rem auto 0rem auto;
   border-radius: 2rem;
   &_createBlogContainer {
@@ -15,11 +15,12 @@
 }
 .homeBlogContainer {
   margin-top: 2rem;
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
+  display: flex;
+  flex-direction: column;
   border-radius: 1rem;
-  padding: 2rem;
-  background: rgb(253, 248, 248);
+  padding: 1rem;
+  height: 100%;
+  background: red;
   &_blogs {
     border-radius: 1rem;
     margin: 1rem;

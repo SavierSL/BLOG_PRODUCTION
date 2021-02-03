@@ -42,16 +42,21 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
+  const [logoutClick, setLogoutClick] = useState(false);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
     img: null,
     imgType: "",
   });
-  useEffect(() => {
+  useEffect((): any => {
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));
-  }, [token, dispatch]);
+    if (token === null) {
+      return <Redirect to="/" />;
+    }
+    console.log(token);
+  }, [token, dispatch, logoutClick]);
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -62,6 +67,9 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       })
     );
   };
+  if (token === null) {
+    return <Redirect to="/" />;
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -116,19 +124,18 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     );
   });
   const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
-  const handleLogout = () => {
+  const handleLogout = (e: any) => {
+    e.preventDefault();
     console.log("logout");
     console.log(token);
-
     dispatch(logOutUser());
+    setLogoutClick(!logoutClick);
   };
-  if (!isAuth) {
-    return <Redirect to="/" />;
-  }
+
   return (
     <>
       <div className="homePage">
-        <button onClick={() => handleLogout()}>LOG OUT</button>
+        <button onClick={(e) => handleLogout(e)}>LOG OUT</button>
         <h1 className="primary-heading">BLOG IT</h1>
         <h1 className="primary-heading">{user.name}</h1>
         <div>
@@ -141,7 +148,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <div className="homePage_content">
           <div
             className="homePage_createBlogContainer"
-            // style={{ display: "none" }}
+            style={{ display: "none" }}
           >
             <FilePond
               files={file}
@@ -175,7 +182,9 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
                 />
               </form>
             </div>
-            <button onClick={(e) => handleSubmit(e)}>Submit</button>
+            <button className="primary-button" onClick={(e) => handleSubmit(e)}>
+              Submit
+            </button>
             <NavLink to="/blog-posts">blogpostsss</NavLink>
           </div>
         </div>

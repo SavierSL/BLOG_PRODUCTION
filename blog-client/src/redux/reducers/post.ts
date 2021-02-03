@@ -1,6 +1,6 @@
 import * as types from "../actions/types";
 interface InitialState {
-  token: null | string;
+  token: null | string | false | void;
   loading: boolean;
   msg: {};
   isAuth: boolean;
