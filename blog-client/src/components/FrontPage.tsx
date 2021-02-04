@@ -77,7 +77,9 @@ const FrontPage: React.FC<FrontPageProps> = ({ theme }) => {
               </form>
               <h2>
                 <span>You still don't have an account?</span>{" "}
-                <NavLink to="/register">Register</NavLink>
+                <NavLink to="/register" style={{ color: "#00aeef" }}>
+                  Register
+                </NavLink>
               </h2>
             </div>
           </div>

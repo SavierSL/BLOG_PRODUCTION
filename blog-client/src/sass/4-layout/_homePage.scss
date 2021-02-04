@@ -27,20 +27,54 @@
     padding: 2rem;
     height: 10rem;
     display: flex;
+    @include respond(phone) {
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
+    @include respond(tab-port) {
+      flex-direction: column;
+      height: 100%;
+      text-align: center;
+    }
     align-items: center;
     &-image {
       border: solid 1px rgb(54, 200, 253);
       border-radius: 100%;
       height: 5rem;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
     }
     &-details {
       margin-left: 5%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
     }
     &-link {
       margin-left: 10%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
     }
     &-delete {
-      margin-left: 10%;
+      margin-left: 8%;
+      @include respond(phone) {
+        margin: 1rem;
+      }
+      @include respond(tab-port) {
+        margin: 1rem;
+      }
     }
   }
 }

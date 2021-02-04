@@ -8,6 +8,10 @@
   grid-template-columns: 33% 33% 33%;
   padding: 2rem;
   border-radius: 1rem;
+  @include respond(tab-port) {
+    margin: 1rem;
+    grid-template-columns: 100%;
+  }
 
   &-content {
     position: relative;

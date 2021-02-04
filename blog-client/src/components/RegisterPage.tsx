@@ -46,8 +46,12 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
       <div className="registerPageContainer">
         <div className="registerPage">
           <div className="registerPage_content">
-            <h1 className="primary-heading">BLOG IT</h1>
-            <h1 className="primary-heading">SIGN UP</h1>
+            <h1 className="secondary-heading">
+              BLOG <span style={{ color: "#00aeef" }}>IT</span>
+            </h1>
+            <h1 className="secondary-heading">
+              <span style={{ color: "#00aeef" }}>SIGN UP</span>
+            </h1>
             <Alert error={error} />
             <div className="registerPage_form">
               <form
@@ -91,13 +95,15 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
                   REGISTER
                 </button>
                 <h2>
-                  <NavLink to="/">Sign In</NavLink>
+                  <span>Already have an account?</span>{" "}
+                  <NavLink to="/" style={{ color: "#00aeef" }}>
+                    Sign In
+                  </NavLink>
                 </h2>
               </form>
             </div>
           </div>
         </div>
-        <div className="registerPage2"></div>
       </div>
     </>
   );
