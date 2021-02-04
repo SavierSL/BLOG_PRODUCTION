@@ -36,3 +36,10 @@ export const logOutUser = () => {
     type: types.LOG_OUT_SAGA,
   };
 };
+
+export const deletePostAction = (token: string, postID: string) => {
+  return {
+    type: types.DELETE_POST_SAGA,
+    payload: { token, postID },
+  };
+};

@@ -1,4 +1,5 @@
 import { all, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { StringDecoder } from "string_decoder";
 import * as type from "../actions/types";
 const port = "http://localhost:5000";
 //login
@@ -228,7 +229,7 @@ function* watchRemoveAlertSaga() {
 //GET USER POSTS
 const getUserPosts = async (token: string) => {
   const content = {
-    mthod: "GET",
+    method: "GET",
     headers: {
       "x-auth-token": token,
     },
@@ -318,6 +319,38 @@ function* logOutSaga() {
 function* watchLogOutSaga() {
   yield takeEvery(type.LOG_OUT_SAGA, logOutSaga);
 }
+//DELETE POST
+const deleteUserPost = async (token: string, postID: string) => {
+  const content = {
+    method: "DELETE",
+    headers: {
+      "x-auth-token": token,
+    },
+  };
+  const data = await fetch(`${port}/post/blog-post/${postID}`, content)
+    .then(async (res) => {
+      const data = await res.json();
+      return data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+  return data;
+};
+function* deleteUserPostSaga(action: any) {
+  const { postID, token } = action.payload;
+  try {
+    const res = yield deleteUserPost(token, postID);
+    console.log(res);
+
+    yield put({ type: type.DELETE_POST_SUCCESS, payload: res });
+  } catch (error) {
+    yield put({ type: type.DELETE_POST_FAILED, payload: error });
+  }
+}
+function* watchDeleteUserPostSaga() {
+  yield takeEvery(type.DELETE_POST_SAGA, deleteUserPostSaga);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -331,5 +364,6 @@ export default function* rootSaga() {
     watchGetPostSaga(),
     watchExitUserPostSaga(),
     watchLogOutSaga(),
+    watchDeleteUserPostSaga(),
   ]);
 }

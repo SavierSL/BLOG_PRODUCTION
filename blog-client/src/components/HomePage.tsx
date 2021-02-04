@@ -11,7 +11,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { blogPostAction, getAllPost } from "../redux/actions/blogPost";
 import { NavLink, Redirect } from "react-router-dom";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
+  deletePostAction,
   getUserAction,
   getUserPostsAction,
   logOutUser,
@@ -42,7 +44,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
-  const [logoutClick, setLogoutClick] = useState(false);
+  const [click, setClick] = useState(false);
   const [blogPost, setBlogPost] = useState<BlogPost>({
     title: "",
     blogContent: "",
@@ -56,7 +58,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
       return <Redirect to="/" />;
     }
     console.log(token);
-  }, [token, dispatch, logoutClick]);
+  }, [token, dispatch, click]);
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -74,7 +76,6 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(blogPostAction(title, blogContent, img, token, imgType));
-
     console.log(blogPost);
   };
   const toBase64 = (file: any) =>
@@ -113,6 +114,12 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const styleThemeBMain = {
     background: theme === "LIGHT" ? "#f1f2f2" : "#005068",
   };
+  const handleDeleteButton = (e: any, postID: string) => {
+    e.preventDefault();
+    console.log("delete");
+    dispatch(deletePostAction(token, postID));
+    setClick(!click);
+  };
   const userPosts = posts.map((post: any) => {
     // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
 
@@ -134,6 +141,20 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
             {user.email}
           </p>
         </div>
+        <div className="homeBlogContainer_blogs-link">
+          <p className="light-p">{`http://localhost:3000/user-post/${post._id}`}</p>
+          <CopyToClipboard text={`http://localhost:3000/user-post/${post._id}`}>
+            <button className="userposts-buttons">Copy to clipboard</button>
+          </CopyToClipboard>
+        </div>
+        <div className="homeBlogContainer_blogs-delete">
+          <button
+            className="userposts-buttons-r"
+            onClick={(e) => handleDeleteButton(e, post._id)}
+          >
+            DELETE
+          </button>
+        </div>
       </div>
     );
   });
@@ -143,7 +164,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     console.log("logout");
     console.log(token);
     dispatch(logOutUser());
-    setLogoutClick(!logoutClick);
+    setClick(!click);
   };
 
   return (
@@ -201,7 +222,6 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
             <button className="primary-button" onClick={(e) => handleSubmit(e)}>
               Submit
             </button>
-            <NavLink to="/blog-posts">blogpostsss</NavLink>
           </div>
         </div>
       </div>

@@ -51,10 +51,8 @@ app.use((req: Req, res: Res, next: Nxt) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-auth-token"
   );
-  if (req.method == "OPTIONS") {
-    res.header("Accesst-Control-Allow-Methos", "GET POST PATCH DELETE PUT");
-    return res.status(200).json({});
-  }
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+
   next();
 });
 

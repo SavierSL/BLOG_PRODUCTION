@@ -29,7 +29,7 @@ export const initialState: InitialUserState = {
 };
 interface Action {
   type: string;
-  payload: string | [];
+  payload: any;
 }
 
 const user = (state = initialState, action: Action) => {
@@ -82,6 +82,16 @@ const user = (state = initialState, action: Action) => {
       return {
         ...state,
         loading: true,
+      };
+    }
+    case types.DELETE_POST_SUCCESS: {
+      const deletedId = payload.deleted._id;
+      const filterPosts = state.posts.filter((post: any) => {
+        return post._id !== deletedId;
+      });
+      return {
+        ...state,
+        posts: filterPosts,
       };
     }
     default: {

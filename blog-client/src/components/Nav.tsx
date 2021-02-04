@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { logOutUser } from "../redux/actions/users";
 import { THEMES } from "./theme/types";
-import { useDispatch, useSelector } from "react-redux";
+
+import { NavLink } from "react-router-dom";
 
 export interface NavProps {
   theme: string;
@@ -10,10 +8,6 @@ export interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ theme, setTheme }) => {
-  const dispatch = useDispatch();
-  const [logoutClick, setLogoutClick] = useState(false);
-  const token = localStorage.getItem("token");
-
   const handleTheme = (e: any) => {
     e.preventDefault();
     theme === "LIGHT" ? setTheme(THEMES.DARK) : setTheme(THEMES.LIGHT);
@@ -38,27 +32,24 @@ const Nav: React.FC<NavProps> = ({ theme, setTheme }) => {
         dark mode
       </button>
     );
-  const handleLogout = (e: any) => {
-    e.preventDefault();
-    console.log("logout");
-    console.log(token);
-    dispatch(logOutUser());
-    setLogoutClick(!logoutClick);
-  };
+
   return (
     <>
       <div
-        style={{ background: theme === "LIGHT" ? "yellow" : "#000" }}
+        style={{ background: theme === "LIGHT" ? "#fff" : "#000" }}
         className="navContainer"
       >
         <div className="navContainer_navTitle">
-          <h1 className="secondary-heading">BLOG IT</h1>
+          <h1 className="secondary-heading">
+            B<span style={{ color: "#00aeef" }}>it</span>
+          </h1>
           {buttonTheme}
         </div>
         <div className="navContainer_navButtons">
-          <button className="primary-button" onClick={(e) => handleLogout(e)}>
-            LOG OUT
-          </button>
+          <NavLink to="/blog-posts">
+            {" "}
+            <button className="primary-button">BLOG POSTS </button>
+          </NavLink>
         </div>
       </div>
     </>
