@@ -131,44 +131,51 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     dispatch(deletePostAction(token, postID));
     setClick(!click);
   };
-  const userPosts = posts.map((post: any) => {
-    // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
+  const userPosts =
+    posts.length === 0 ? (
+      <h3 className="tertiary-heading">You do not have any blog post</h3>
+    ) : (
+      posts.map((post: any) => {
+        // return <img style={{ height: "20rem" }} src={post.image} alt="" />;
 
-    return (
-      <div style={styleThemeB} className="homeBlogContainer_blogs">
-        <img
-          className="homeBlogContainer_blogs-image"
-          src={user.avatar}
-          alt=""
-        />
-        <div className="homeBlogContainer_blogs-details">
-          <p className="primary-p" style={styleThemeT}>
-            {post.title} <span> - {user.name}</span>
-          </p>
-          <p className="primary-p" style={styleThemeT}>
-            {post.date}
-          </p>
-          <p style={{ color: "#00aeef" }} className="primary-p">
-            {user.email}
-          </p>
-        </div>
-        <div className="homeBlogContainer_blogs-link">
-          <p className="light-p">{`http://localhost:3000/user-post/${post._id}`}</p>
-          <CopyToClipboard text={`http://localhost:3000/user-post/${post._id}`}>
-            <button className="userposts-buttons">Copy to clipboard</button>
-          </CopyToClipboard>
-        </div>
-        <div className="homeBlogContainer_blogs-delete">
-          <button
-            className="userposts-buttons-r"
-            onClick={(e) => handleDeleteButton(e, post._id)}
-          >
-            DELETE
-          </button>
-        </div>
-      </div>
+        return (
+          <div style={styleThemeB} className="homeBlogContainer_blogs">
+            <img
+              className="homeBlogContainer_blogs-image"
+              src={user.avatar}
+              alt=""
+            />
+            <div className="homeBlogContainer_blogs-details">
+              <p className="primary-p" style={styleThemeT}>
+                {post.title} <span> - {user.name}</span>
+              </p>
+              <p className="primary-p" style={styleThemeT}>
+                {post.date}
+              </p>
+              <p style={{ color: "#00aeef" }} className="primary-p">
+                {user.email}
+              </p>
+            </div>
+            <div className="homeBlogContainer_blogs-link">
+              <p className="light-p">{`http://localhost:3000/user-post/${post._id}`}</p>
+              <CopyToClipboard
+                text={`http://localhost:3000/user-post/${post._id}`}
+              >
+                <button className="userposts-buttons">Copy to clipboard</button>
+              </CopyToClipboard>
+            </div>
+            <div className="homeBlogContainer_blogs-delete">
+              <button
+                className="userposts-buttons-r"
+                onClick={(e) => handleDeleteButton(e, post._id)}
+              >
+                DELETE
+              </button>
+            </div>
+          </div>
+        );
+      })
     );
-  });
   const ifLoading = loading ? <h1>Getting Blog Datas</h1> : userPosts;
   const handleLogout = (e: any) => {
     e.preventDefault();
@@ -232,11 +239,13 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
             <FilePond
               files={file}
               onupdatefiles={(file) => handleUpdateFIle(file)}
-              maxFiles={3}
               name="files"
               labelIdle='Drag  Drop your files or <span class="filepond--label-action">Browse</span>'
             />
             <div className="frontPage_form">
+              <h2 style={{ color: "red" }}>
+                {file.length === 0 ? "Add an image first" : ""}
+              </h2>
               <form
                 className="primary-form"
                 action=""
@@ -246,18 +255,27 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
                   className="primary-form_primary-input"
                   placeholder="title"
                   onChange={(e) => handleInput(e)}
-                  style={{ width: "80%" }}
+                  style={{
+                    width: "80%",
+                    border: `${file.length === 0 ? "solid red 1px" : ""}`,
+                  }}
                   name="title"
                   type="text"
                   value={blogPost.title}
+                  disabled={file.length === 0 ? true : false}
                 />
                 <textarea
                   className="primary-form_primary-input"
                   placeholder="Caption"
-                  style={{ width: "100%", height: "20rem" }}
+                  style={{
+                    width: "100%",
+                    height: "10rem",
+                    border: `${file.length === 0 ? "solid red 1px" : ""}`,
+                  }}
                   onChange={(e) => handleInput(e)}
                   name="blogContent"
                   value={blogPost.blogContent}
+                  disabled={file.length === 0 ? true : false}
                 />
               </form>
             </div>

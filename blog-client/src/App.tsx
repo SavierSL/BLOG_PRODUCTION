@@ -13,6 +13,7 @@ import { THEMES } from "./components/theme/types";
 import { Theme } from "./components/theme/styles";
 
 import BlogPosts from "./components/BlogPosts";
+import Footer from "./components/Footer";
 
 export interface AppProps {}
 
@@ -45,6 +46,7 @@ const App: React.FC<AppProps> = () => {
                 />
                 <Route exact path="/blog-posts" component={BlogPosts} />
               </Switch>
+              <Footer />
             </Router>
           </Theme>
         </Provider>
