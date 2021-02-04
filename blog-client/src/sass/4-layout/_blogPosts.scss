@@ -8,6 +8,7 @@
   grid-template-columns: 33% 33% 33%;
   padding: 2rem;
   border-radius: 1rem;
+
   @include respond(tab-port) {
     margin: 1rem;
     grid-template-columns: 100%;
@@ -15,12 +16,14 @@
 
   &-content {
     position: relative;
+
     margin: 1rem;
     height: 90%;
     padding: 2rem;
     border: solid 2px rgb(216, 216, 216);
     border-radius: 1rem;
     transition: all 1s;
+    width: 100%;
 
     cursor: pointer;
     &-box {

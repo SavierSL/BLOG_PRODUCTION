@@ -19,6 +19,7 @@ import {
   logOutUser,
   newPostUserAction,
 } from "../redux/actions/users";
+import { motion, useAnimation } from "framer-motion";
 
 export interface HomePageProps {
   theme: string;
@@ -40,7 +41,7 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const user = useSelector((state: any) => state.user.user);
-
+  const animation = useAnimation();
   const [file, setFiles] = useState([]);
   const posts = useSelector((state: any) => state.user.posts);
   const loading = useSelector((state: any) => state.user.loadingPosts);
@@ -51,14 +52,24 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     img: null,
     imgType: "",
   });
+  const [createPostClick, setCreatePostClick] = useState<null | false | true>(
+    null
+  );
+  const [vLovation, setVlocation] = useState(0);
   useEffect((): any => {
     dispatch(getUserAction(token));
     dispatch(getUserPostsAction(token));
     if (token === null) {
       return <Redirect to="/" />;
     }
+    if (createPostClick) {
+      animation.start("visible");
+    }
+    if (createPostClick === false) {
+      animation.start("visible");
+    }
     console.log(token);
-  }, [token, dispatch, click]);
+  }, [token, dispatch, click, createPostClick, animation]);
   const { title, blogContent, img, imgType } = blogPost;
   const handleUpdateFIle = (file: any) => {
     setFiles(
@@ -166,7 +177,29 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
     dispatch(logOutUser());
     setClick(!click);
   };
+  const createPostVariants = {
+    hidden: {
+      y: -180,
+      opacity: 0,
+      display: "none",
+    },
+    visible: {
+      y: vLovation,
+      opacity: 1,
+      display: "block",
+    },
+  };
 
+  const createPostButton = (e: any) => {
+    e.preventDefault();
+    setCreatePostClick(true);
+    setVlocation(0);
+  };
+  const handleClose = (e: any) => {
+    e.preventDefault();
+    setCreatePostClick(false);
+    setVlocation(-880);
+  };
   return (
     <>
       <div className="homePage">
@@ -178,14 +211,23 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
         <div>
           <span className="primary-span">{user.email}</span>
         </div>
+        <button
+          style={{ marginTop: "2rem" }}
+          className="primary-button"
+          onClick={(e) => createPostButton(e)}
+        >
+          Create Post
+        </button>
         <div style={styleThemeBMain} className="homeBlogContainer">
           {ifLoading}
         </div>
 
         <div className="homePage_content">
-          <div
+          <motion.div
+            animate={animation}
+            variants={createPostVariants}
+            initial="hidden"
             className="homePage_createBlogContainer"
-            // style={{ display: "none" }}
           >
             <FilePond
               files={file}
@@ -222,7 +264,10 @@ const HomePage: React.FC<HomePageProps> = ({ theme }) => {
             <button className="primary-button" onClick={(e) => handleSubmit(e)}>
               Submit
             </button>
-          </div>
+            <button className="primary-button" onClick={(e) => handleClose(e)}>
+              Close
+            </button>
+          </motion.div>
         </div>
       </div>
     </>

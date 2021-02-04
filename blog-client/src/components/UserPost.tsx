@@ -58,9 +58,9 @@ const UserPost: React.FC<UserPostProps> = ({ props }) => {
           />
         </div>
 
-        <h3 className="userPostContainer__userBlogPost-content">
+        <p className="userPostContainer__userBlogPost-content">
           {post && post.blogContent}
-        </h3>
+        </p>
       </div>
     </div>
   );
