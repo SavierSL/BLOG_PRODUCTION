@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import logging from "../src/config/logging";
-import config from "../src/config/config";
+// import config from "../src/config/config";
 import sample from "./routes/sample";
 import { connectDB } from "./config/db";
 import { Res, Req, Nxt } from "../src/TS/types";
@@ -78,8 +78,8 @@ if (process.env.NODE_ENV === "production") {
 
 //Create the server
 // const httpServer = http.createServer(() => router);
-app.listen(config.server.port, () =>
-  logging.info(NAMESPACE, `${config.server.hostname}:${config.server.port}`)
+app.listen(process.env.PORT || 5000, () =>
+  logging.info(NAMESPACE, `Connected`)
 );
 
 //pack
