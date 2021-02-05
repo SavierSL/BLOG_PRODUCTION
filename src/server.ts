@@ -72,8 +72,15 @@ app.use((req: Req, res: Res, next: Nxt) => {
   next();
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("blog-client/build"));
+}
+
 //Create the server
 // const httpServer = http.createServer(() => router);
 app.listen(config.server.port, () =>
   logging.info(NAMESPACE, `${config.server.hostname}:${config.server.port}`)
 );
+
+//pack
+// "build": "rm -rf build && prettier --write src/ && tsc"
