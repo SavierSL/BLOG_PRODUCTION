@@ -4,8 +4,11 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "rm -rf build && prettier --write src/ && tsc",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "postinstall": "tsc",
+    "watch-node": "nodemon build/server.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -am heroku && git push heroku master"
   },
   "author": "",
   "license": "ISC",
