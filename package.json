@@ -4,9 +4,9 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npx node build/server.js",
+    "start": "node build/src/server.js",
     "postinstall": "tsc",
-    "watch-node": "nodemon build/server.js",
+    "watch-node": "nodemon build/src/server.js",
     "watch-ts": "tsc -w",
     "deploy": "git add . && git commit -am heroku && git push heroku master"
   },
