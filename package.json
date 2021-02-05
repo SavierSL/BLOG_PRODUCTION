@@ -4,9 +4,6 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "cd client && yarn build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
     "start": "npx node server.ts"
   },
   "author": "",
