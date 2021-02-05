@@ -24,19 +24,19 @@ connectDB();
 
 //Logging the request
 
-app.use((req: Req, res: Res, next) => {
-  logging.info(
-    NAMESPACE,
-    `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`
-  );
-  res.on("finish", () => {
-    logging.info(
-      NAMESPACE,
-      `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${req.statusCode}]`
-    );
-  });
-  next();
-});
+// app.use((req: Req, res: Res, next) => {
+//   logging.info(
+//     NAMESPACE,
+//     `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`
+//   );
+//   res.on("finish", () => {
+//     logging.info(
+//       NAMESPACE,
+//       `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${req.statusCode}]`
+//     );
+//   });
+//   next();
+// });
 
 //Parse the request
 app.use(cookieParser());
@@ -72,9 +72,9 @@ app.use((req: Req, res: Res, next: Nxt) => {
   next();
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("blog-client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("blog-client/build"));
+// }
 
 //Create the server
 // const httpServer = http.createServer(() => router);
