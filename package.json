@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node src/server.ts"
+    "build": "rm -rf build && prettier --write src/ && tsc",
+    "start": "node build/server.js"
   },
   "author": "",
   "license": "ISC",
