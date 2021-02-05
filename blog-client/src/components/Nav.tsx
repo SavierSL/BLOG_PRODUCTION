@@ -46,6 +46,10 @@ const Nav: React.FC<NavProps> = ({ theme, setTheme }) => {
           {buttonTheme}
         </div>
         <div className="navContainer_navButtons">
+          <NavLink to="/home">
+            {" "}
+            <button className="primary-button">HOME</button>
+          </NavLink>
           <NavLink to="/blog-posts">
             {" "}
             <button className="primary-button">BLOG POSTS </button>

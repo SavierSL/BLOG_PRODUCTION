@@ -49,7 +49,7 @@ const BlogPosts: React.FC<BlogPostsProps> = () => {
   ) : (
     <div className="blogPostsContainer">
       <h1>Blog Posts</h1>
-      <NavLink to="/home">home</NavLink>
+   
       <div className="blogContentContainer">
         {posts.length !== 0
           ? posts.map((post: any) => {
