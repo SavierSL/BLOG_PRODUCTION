@@ -86,7 +86,7 @@ export const GetAllPostCTRL = async (req: Req, res: Res) => {
     const newPosts = posts.map(async (post) => {
       const user: IUser | null = await User.findById(post.user);
       const newPost = {
-        ...posts,
+        ...post,
         user: user,
       };
       return newPost;
@@ -99,7 +99,9 @@ export const GetAllPostCTRL = async (req: Req, res: Res) => {
 export const GetPostUser = async (req: Req, res: Res) => {
   const postID = ((req as any).params as { post_id: string }).post_id;
   try {
-    const user: IBlogPost | null = await BlogPost.findById(postID);
+    const user: IBlogPost | null = await BlogPost.findById(postID).select(
+      "-img"
+    );
     if (!user) {
       return res.status(400).json({ msg: [{ msg: "Cannot find user post" }] });
     }
