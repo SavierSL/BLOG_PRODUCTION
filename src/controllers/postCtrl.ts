@@ -86,7 +86,7 @@ export const GetAllPostCTRL = async (req: Req, res: Res) => {
     const newPosts = posts.map(async (post) => {
       const user: IUser | null = await User.findById(post.user);
       const newPost = {
-        ...post,
+        ...posts,
         user: user,
       };
       return newPost;
