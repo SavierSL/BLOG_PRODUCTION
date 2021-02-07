@@ -83,7 +83,15 @@ export const BlogPostCTRL: RequestHandler = async (req: Req, res: Res) => {
 export const GetAllPostCTRL = async (req: Req, res: Res) => {
   try {
     const posts: IBlogPost[] = await BlogPost.find().select("-img");
-    res.json(posts);
+    const newPosts = posts.map(async (post) => {
+      const user: IUser | null = await User.findById(post.user);
+      const newPost = {
+        ...post,
+        user: user,
+      };
+      return newPost;
+    });
+    res.json(newPosts);
   } catch (error) {
     res.status(400).json(error);
   }
