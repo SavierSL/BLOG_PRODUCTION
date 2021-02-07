@@ -78,7 +78,9 @@ app.use((req: Req, res: Res, next: Nxt) => {
 
 //Create the server
 // const httpServer = http.createServer(() => router);
-app.listen(5000, () => logging.info(NAMESPACE, `Connected`)); //process.env.PORT
+app.listen(process.env.PORT || 5000, () =>
+  logging.info(NAMESPACE, `Connected`)
+); //process.env.PORT
 
 //pack
 // "build": "rm -rf build && prettier --write src/ && tsc"
