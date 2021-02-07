@@ -18,7 +18,6 @@ const router = express.Router();
 //@api /post/blog-post
 router.post("/blog-post", [
   auth,
-
   check("title", "Title is required").not().isEmpty(),
   check("blogContent", "Blog Content is required").not().isEmpty(),
   BlogPostCTRL,
